@@ -92,5 +92,7 @@ class SaleLine(metaclass=PoolMeta):
     def copy(cls, lines, default=None):
         if default is None:
             default = {}
+        else:
+            default = default.copy()
         default.setdefault('manual_delivery_date')
         return super(SaleLine, cls).copy(lines, default)
