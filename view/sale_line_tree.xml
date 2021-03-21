@@ -2,7 +2,7 @@
 <!-- The COPYRIGHT file at the top level of this repository contains the full
      copyright notices and license terms. -->
 <data>
-    <xpath expr="/tree/field[@name='unit']" position="after">
+    <xpath expr="/tree/field[@name='quantity']" position="after">
         <field name="manual_delivery_date"/>
     </xpath>
 </data>
