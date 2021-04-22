@@ -96,3 +96,10 @@ class SaleLine(metaclass=PoolMeta):
             default = default.copy()
         default.setdefault('manual_delivery_date')
         return super(SaleLine, cls).copy(lines, default)
+
+    @property
+    @fields.depends('manual_delivery_date')
+    def planned_shipping_date(self):
+        if self.manual_delivery_date:
+            return self.manual_delivery_date
+        return super().planned_shipping_date
