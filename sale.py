@@ -80,13 +80,12 @@ class SaleLine(metaclass=PoolMeta):
     def on_change_with_manual_delivery_date(self):
         if self.manual_delivery_date:
             return self.manual_delivery_date
-        return super(SaleLine,
-            self).on_change_with_shipping_date(name='shipping_date')
+        return super().on_change_with_shipping_date(name='shipping_date')
 
     @fields.depends('manual_delivery_date')
     def on_change_with_shipping_date(self, name=None):
-        return self.manual_delivery_date or super(SaleLine,
-            self).on_change_with_shipping_date(name=name)
+        return (self.manual_delivery_date
+            or super().on_change_with_shipping_date(name=name))
 
     @classmethod
     def copy(cls, lines, default=None):
@@ -95,7 +94,7 @@ class SaleLine(metaclass=PoolMeta):
         else:
             default = default.copy()
         default.setdefault('manual_delivery_date')
-        return super(SaleLine, cls).copy(lines, default)
+        return super().copy(lines, default)
 
     @property
     @fields.depends('manual_delivery_date')
