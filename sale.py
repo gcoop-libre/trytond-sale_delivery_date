@@ -75,13 +75,6 @@ class SaleLine(metaclass=PoolMeta):
                     values=[sql_table.shipping_date]))
             table.drop_column('shipping_date')
 
-    @fields.depends('manual_delivery_date',
-        methods=['on_change_with_shipping_date'])
-    def on_change_with_manual_delivery_date(self):
-        if self.manual_delivery_date:
-            return self.manual_delivery_date
-        return super().on_change_with_shipping_date(name='shipping_date')
-
     @fields.depends('manual_delivery_date')
     def on_change_with_shipping_date(self, name=None):
         return (self.manual_delivery_date
