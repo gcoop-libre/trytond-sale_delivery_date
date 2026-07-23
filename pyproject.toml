@@ -1,0 +1,62 @@
+[build-system]
+requires = [
+    'hatchling >= 1',
+    'hatch-tryton',
+    'hatch-tryton-ar @ git+https://github.com/tryton-ar/hatch-tryton-ar.git'
+    ]
+build-backend = 'hatchling.build'
+
+[project]
+name = 'trytonar_sale_delivery_date'
+dynamic = ['version', 'dependencies', 'optional-dependencies', 'authors', 'readme']
+requires-python = '>=3.10'
+maintainers = [
+    {name = "NaN·tic", email = "info@nan-tic.com"},
+    ]
+description = 'Tryton module to add manual delivery date to sale lines'
+license = 'GPL-3.0-or-later'
+license-files = ['LICENSE', 'COPYRIGHT']
+keywords = ["tryton", "sale", "delivery", "date"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Plugins",
+    "Framework :: Tryton",
+    "Topic :: Office/Business",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    ]
+
+[project.entry-points.'trytond.modules']
+sale_delivery_date = 'trytond.modules.sale_delivery_date'
+
+[project.urls]
+homepage = "https://github.com/gcoop-libre/trytond-sale_delivery_date"
+documentation = "https://docs.tryton.org/"
+changelog = "https://github.com/gcoop-libre/trytond-sale_delivery_date/blob/master/CHANGELOG"
+forum = "https://www.tryton.org/forum"
+issues = "https://github.com/gcoop-libre/trytond-sale_delivery_date/issues"
+
+[tool.hatch.build]
+include = [
+    '**/tryton.cfg',
+    '**/*.py',
+    '**/*.xml',
+    'view/**/*.xml',
+    'locale/**/*.po',
+    '**/*.fodt',
+    'icons/**/*.svg',
+    'tests/**/*.rst',
+    ]
+exclude = ['doc']
+
+[tool.hatch.build.targets.wheel.sources]
+"" = "trytond/modules/sale_delivery_date"
+
+[tool.hatch.metadata.hooks.tryton]
+dependencies = []
+copyright = 'COPYRIGHT'
+readme = 'README.rst'
+
+[tool.hatch.metadata.hooks.tryton-ar.repos]
+
+[tool.hatch.metadata.hooks.tryton.tryton-optional-dependencies]
+test = ['proteus']

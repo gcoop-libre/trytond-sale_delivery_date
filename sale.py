@@ -59,10 +59,12 @@ class SaleLine(metaclass=PoolMeta):
         cursor = Transaction().connection.cursor()
         sql_table = cls.__table__()
 
-        # Migration from 3.2
-        table = cls.__table_handler__(module_name)
-        move_delivery_dates = (not table.column_exist('manual_delivery_date')
-            and table.column_exist('shipping_date'))
+        # Migration from 3.2 - handle both legacy shipping_date and manual_delivery_date columns
+        handler = cls.__table_handler__(module_name)
+        move_delivery_dates = (
+            not handler.column_exist('manual_delivery_date')
+            and handler.column_exist('shipping_date')
+        )
 
         super().__register__(module_name)
 
@@ -70,7 +72,7 @@ class SaleLine(metaclass=PoolMeta):
             cursor.execute(*sql_table.update(
                     columns=[sql_table.manual_delivery_date],
                     values=[sql_table.shipping_date]))
-            table.drop_column('shipping_date')
+            handler.drop_column('shipping_date')
 
     @fields.depends('manual_delivery_date',
         methods=['on_change_with_shipping_date'])
